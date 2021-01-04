@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+
 /*  C# code based on OpenSource Project open2300 */
 
 namespace WS2300
@@ -12,7 +13,7 @@ namespace WS2300
         private WS2300base ws2300;
         private WS2300base.config_type config;
         private StreamWriter logsr;
-        private string LogFile;
+        private readonly string LogFile;
         private const string VER = "WS2300 1.0 - 2008-12-19";
         /* Revision History
         1.0 2007-04-26 initial release
@@ -63,19 +64,19 @@ namespace WS2300
             DateTime dt = this.dateTimePicker1.Value;
             long s;
             // set max val all'ora precedente
-            // s = 3600 + dt.Minute * 60 + dt.Second;
+            // s = 3600 + dt.Minute * 60 + dt.Second
             // set max val al minuto precedente
             s = 60 + dt.Second;
             this.dateTimePicker1.Value = new DateTime(dt.Ticks - s * 10000000);
             this.dateTimePicker1.MaxDate = this.dateTimePicker1.Value;
         }
 
-        private void display(string p)
+        private void Display(string p)
         {
             this.textBoxReceive.Text += p + Environment.NewLine;
         }
 
-        private void btnInTmp_Click(object sender, EventArgs e)
+        private void BtnInTmp_Click(object sender, EventArgs e)
         {
             try
             {
@@ -88,66 +89,66 @@ namespace WS2300
             }
         }
 
-        private void btnRead_Click(object sender, EventArgs e)
+        private void BtnRead_Click(object sender, EventArgs e)
         {
             double ret;
             int tempint;
             string[] directions = new string[]{"N","NNE","NE","ENE","E","ESE","SE","SSE",
-	                           "S","SSW","SW","WSW","W","WNW","NW","NNW"};
+                               "S","SSW","SW","WSW","W","WNW","NW","NNW"};
             short[] winddir = new short[6];
             try
             {
                 /* READ TEMPERATURE INDOOR */
                 ret = ws2300.temperature_indoor(config.temperature_conv);
-                display("TEMP in=" + ret.ToString());
+                Display("TEMP in=" + ret.ToString());
                 /* READ TEMPERATURE OUTDOOR */
                 ret = ws2300.temperature_outdoor(config.temperature_conv);
-                display("TEMP out=" + ret.ToString());
+                Display("TEMP out=" + ret.ToString());
                 /* READ DEWPOINT */
                 ret = ws2300.dewpoint(config.temperature_conv);
-                display("Dew point=" + ret.ToString());
+                Display("Dew point=" + ret.ToString());
                 /* READ RELATIVE HUMIDITY INDOOR */
                 ret = ws2300.humidity_indoor();
-                display("HUM in=" + ret.ToString());
+                Display("HUM in=" + ret.ToString());
                 /* READ RELATIVE HUMIDITY OUTDOOR */
                 ret = ws2300.humidity_outdoor();
-                display("HUM out=" + ret.ToString());
+                Display("HUM out=" + ret.ToString());
                 /* READ WIND SPEED AND DIRECTION */
                 tempint = -1;
                 winddir[0] = 0xFFF;
                 ret = ws2300.wind_all(config.wind_speed_conv_factor, ref tempint, ref winddir);
-                display("Wind=" + ret.ToString() + " dir:" + winddir[0].ToString() + "° " + directions[tempint]);
+                Display("Wind=" + ret.ToString() + " dir:" + winddir[0].ToString() + "° " + directions[tempint]);
                 //sprintf(logline, "%s%.1f %s ", logline, winddir[0], directions[tempint]);
                 /* READ WINDCHILL */
                 ret = ws2300.windchill(config.temperature_conv);
-                display("Windchill=" + ret.ToString());
+                Display("Windchill=" + ret.ToString());
                 /* READ RAIN 1H */
                 ret = ws2300.rain_1h(config.rain_conv_factor);
-                display("RAIN 1h=" + ret.ToString());
+                Display("RAIN 1h=" + ret.ToString());
                 /* READ RAIN 24H */
                 ret = ws2300.rain_24h(config.rain_conv_factor);
-                display("RAIN 24h=" + ret.ToString());
+                Display("RAIN 24h=" + ret.ToString());
                 /* READ RAIN TOTAL */
                 ret = ws2300.rain_total(config.rain_conv_factor);
-                display("RAIN tot=" + ret.ToString());
+                Display("RAIN tot=" + ret.ToString());
                 /* READ RELATIVE PRESSURE */
                 ret = ws2300.rel_pressure(config.pressure_conv_factor);
-                display("PRESS rel=" + ret.ToString());
+                Display("PRESS rel=" + ret.ToString());
                 /* READ TENDENCY AND FORECAST */
                 string tendency = "";
                 string forecast = "";
                 ws2300.tendency_forecast(ref tendency, ref forecast);
-                display("   tendency=" + tendency);
-                display("   forecast=" + forecast);
+                Display("   tendency=" + tendency);
+                Display("   forecast=" + forecast);
             }
             catch (Exception ex)
             {
-                display("ERROR: " + ex.Message);
+                Display("ERROR: " + ex.Message);
             }
-            display("");
+            Display("");
         }
 
-        private void btnMinMax_Click(object sender, EventArgs e)
+        private void BtnMinMax_Click(object sender, EventArgs e)
         {
             double retmin, retmax;
             int retmini, retmaxi;
@@ -162,29 +163,29 @@ namespace WS2300
             try
             {
                 ws2300.temperature_indoor_minmax(config.temperature_conv, ref retmin, ref retmax, ref timemin, ref timemax);
-                display("TEMP in min=" + retmin.ToString("F2") + time(timemin));
-                display("TEMP in max=" + retmax.ToString("F2") + time(timemax));
+                Display("TEMP in min=" + retmin.ToString("F2") + Time(timemin));
+                Display("TEMP in max=" + retmax.ToString("F2") + Time(timemax));
                 ws2300.temperature_outdoor_minmax(config.temperature_conv, ref retmin, ref retmax, ref timemin, ref timemax);
-                display("TEMP out min=" + retmin.ToString("F2") + time(timemin));
-                display("TEMP out max=" + retmax.ToString("F2") + time(timemax));
+                Display("TEMP out min=" + retmin.ToString("F2") + Time(timemin));
+                Display("TEMP out max=" + retmax.ToString("F2") + Time(timemax));
                 ws2300.humidity_indoor_all(ref retmini, ref retmaxi, ref timemin, ref timemax);
-                display("HUM in min=" + retmin.ToString("F2") + time(timemin));
-                display("HUM in max=" + retmax.ToString("F2") + time(timemax));
+                Display("HUM in min=" + retmin.ToString("F2") + Time(timemin));
+                Display("HUM in max=" + retmax.ToString("F2") + Time(timemax));
                 ws2300.humidity_outdoor_all(ref retmini, ref retmaxi, ref timemin, ref timemax);
-                display("HUM out min=" + retmin.ToString("F2") + time(timemin));
-                display("HUM out max=" + retmax.ToString("F2") + time(timemax));
+                Display("HUM out min=" + retmin.ToString("F2") + Time(timemin));
+                Display("HUM out max=" + retmax.ToString("F2") + Time(timemax));
                 ws2300.rel_pressure_minmax(config.pressure_conv_factor, ref retmin, ref retmax, ref timemin, ref timemax);
-                display("PRESS rel min=" + retmin.ToString("F2") + time(timemin));
-                display("PRESS rel max=" + retmax.ToString("F2") + time(timemax));
+                Display("PRESS rel min=" + retmin.ToString("F2") + Time(timemin));
+                Display("PRESS rel max=" + retmax.ToString("F2") + Time(timemax));
             }
             catch (Exception ex)
             {
-                display("ERROR: " + ex.Message);
+                Display("ERROR: " + ex.Message);
             }
-            display("");
+            Display("");
         }
 
-        private void btnReset_Click(object sender, EventArgs e)
+        private void BtnReset_Click(object sender, EventArgs e)
         {
             /*
             double s;
@@ -199,38 +200,38 @@ namespace WS2300
                 //ws.temperature_indoor_reset(ws2300, WS2300base.RESET_MIN);
                 //ws.temperature_indoor_reset(ws2300, WS2300base.RESET_MAX);
                 ws2300.temperature_indoor_reset(WS2300base.RESET_MIN | WS2300base.RESET_MAX);
-                display("TEMP in min/max resetted");
+                Display("TEMP in min/max resetted");
                 ws2300.temperature_outdoor_reset(WS2300base.RESET_MIN | WS2300base.RESET_MAX);
-                display("TEMP out min/max resetted");
+                Display("TEMP out min/max resetted");
                 ws2300.humidity_indoor_reset(WS2300base.RESET_MIN | WS2300base.RESET_MAX);
-                display("HUM in min/max resetted");
+                Display("HUM in min/max resetted");
                 ws2300.humidity_outdoor_reset(WS2300base.RESET_MIN | WS2300base.RESET_MAX);
-                display("HUM out min/max resetted");
+                Display("HUM out min/max resetted");
                 ws2300.pressure_reset(WS2300base.RESET_MIN | WS2300base.RESET_MAX);
-                display("PRESSURE min/max resetted");
+                Display("PRESSURE min/max resetted");
                 ws2300.rain_total_reset();
-                display("RAIN total resetted");
+                Display("RAIN total resetted");
             }
             catch (Exception ex)
             {
-                display("ERROR: " + ex.Message);
+                Display("ERROR: " + ex.Message);
             }
-            display("");
+            Display("");
         }
 
-        private void btnHistory_Click(object sender, EventArgs e)
+        private void BtnHistory_Click(object sender, EventArgs e)
         {
             // console only:
             //History(0);
             History(1);
         }
 
-        private void btnHistorySave_Click(object sender, EventArgs e)
+        private void BtnHistorySave_Click(object sender, EventArgs e)
         {
             History(2);
             /*
              *  Table structure for table `weather`
-             * 
+             *
              CREATE TABLE `weather` (
             `timestamp` bigint(14) NOT NULL default '0',
             `rec_date` date NOT NULL default '0000-00-00',
@@ -287,8 +288,8 @@ namespace WS2300
                 current_record = ws2300.read_history_info(ref interval, ref countdown, ref time_last, ref no_records);
                 if (type != 2)
                 {
-                    display("HISTORY last=" + current_record.ToString() + " interval:" + interval.ToString() +
-                        " countdown:" + countdown.ToString() + " recno:" + no_records.ToString() + " timelast:" + time(time_last));
+                    Display("HISTORY last=" + current_record.ToString() + " interval:" + interval.ToString() +
+                        " countdown:" + countdown.ToString() + " recno:" + no_records.ToString() + " timelast:" + Time(time_last));
                 }
                 time_lastrecord_tm = new DateTime(time_last.year, time_last.month, time_last.day,
                     time_last.hour, time_last.minute, 0);
@@ -307,15 +308,21 @@ namespace WS2300
                 new_records = (int)(ds.TotalMinutes / interval);
 
                 if (new_records > 0xAF)
+                {
                     new_records = 0xAF;
+                }
 
                 if (new_records > no_records)
+                {
                     new_records = no_records;
+                }
 
                 lastlog_record = current_record - new_records;
 
                 if (lastlog_record < 0)
+                {
                     lastlog_record = 0xAE + lastlog_record + 1;
+                }
 
                 time_lastrecord_tm = time_lastrecord_tm.Subtract(System.TimeSpan.FromMinutes(new_records * interval));
 
@@ -371,31 +378,33 @@ namespace WS2300
             }
             catch (Exception ex)
             {
-                display("ERROR: " + ex.Message);
+                Display("ERROR: " + ex.Message);
             }
-            display("");
+            Display("");
         }
 
-        private string decimalDB(double val)
+        private string DecimalDB(double val)
         {
             return val.ToString("F1").Replace(',', '.');
         }
 
-        private string timeDB(DateTime timestr, int type)
+        private string TimeDB(DateTime timestr, int type)
         {
             switch (type)
             {
                 case 0:
                     return timestr.Ticks.ToString();
+
                 case 1:
                     return timestr.Year + timestr.Month.ToString("D2") + timestr.Day.ToString("D2");
+
                 case 2:
                     return timestr.Hour.ToString("D2") + ":" + timestr.Minute.ToString("D2");
             }
             return "";
         }
 
-        private string time(WS2300base.timestamp timestr)
+        private string Time(WS2300base.timestamp timestr)
         {
             string retStr;
             retStr = " " + timestr.day.ToString() + "/" + timestr.month.ToString() + "/" + timestr.year.ToString();
@@ -403,7 +412,7 @@ namespace WS2300
             return retStr;
         }
 
-        private string time(DateTime timestr)
+        private string Time(DateTime timestr)
         {
             //17:00	24.04.2007
             string retStr;
@@ -414,7 +423,8 @@ namespace WS2300
         }
 
         #region THREAD
-        private void btnReadTh_Click(object sender, EventArgs e)
+
+        private void BtnReadTh_Click(object sender, EventArgs e)
         {
             toolStripStatusLabel.Text = "data reading...";
             ShowProgressDelegate showProgress = new ShowProgressDelegate(ShowProgress);
@@ -430,7 +440,8 @@ namespace WS2300
             t.Start();
         }
 
-        delegate void ShowProgressDelegate(string msg, bool done, int cnt);
+        private delegate void ShowProgressDelegate(string msg, bool done, int cnt);
+
         private void ShowProgress(string msg, bool done, int cnt)
         {
             try
@@ -462,13 +473,13 @@ namespace WS2300
                     }
                     else
                     {
-                        display(msg);
+                        Display(msg);
                     }
                 }
             }
             catch (Exception ex)
             {
-                display("ERROR: " + ex.Message);
+                Display("ERROR: " + ex.Message);
             }
         }
 
@@ -493,10 +504,11 @@ namespace WS2300
             t.Start();
         }
 
-        #endregion
+        #endregion THREAD
 
         #region HistoryLog
-        private void btnViewLog_Click(object sender, EventArgs e)
+
+        private void BtnViewLog_Click(object sender, EventArgs e)
         {
             string txtBody;
             int lstTimestampIdx;
@@ -538,8 +550,8 @@ namespace WS2300
                     if (lstTimestampIdx > -1)
                     {
                         lstTimestamp = txtBody.Substring(lstTimestampIdx, 18);
-                        this.dateTimePicker1.MaxDate = new DateTime((long)Convert.ToInt64(lstTimestamp));
-                        this.dateTimePicker1.Value = new DateTime((long)Convert.ToInt64(lstTimestamp));
+                        dateTimePicker1.MaxDate = new DateTime(Convert.ToInt64(lstTimestamp));
+                        dateTimePicker1.Value = new DateTime(Convert.ToInt64(lstTimestamp));
                     }
                     // riapre il log
                     logsr = File.AppendText(LogFile);
@@ -554,10 +566,11 @@ namespace WS2300
             catch (Exception ex)
             {
                 toolStripStatusLabel.Text = "Log file invalid; delete it!";
-                display("ERROR: " + ex.Message);
+                Display("ERROR: " + ex.Message);
             }
         }
-        #endregion
+
+        #endregion HistoryLog
 
         private void GRAPH_Click(object sender, EventArgs e)
         {
@@ -566,7 +579,7 @@ namespace WS2300
             graph.Dispose();
         }
 
-        private void btnMean_Click(object sender, EventArgs e)
+        private void BtnMean_Click(object sender, EventArgs e)
         {
             // media delle temperature esterne
             MaxMinList list = new MaxMinList();
@@ -590,19 +603,23 @@ namespace WS2300
                 {
                     lval = line.Split(',');
                     if (lval.Length >= (meteovar + 3))
+                    {
                         lv = lval[meteovar + 3].Replace('.', ',').Trim();
+                    }
                 }
                 else
                 {
                     line = line.Substring(line.LastIndexOf("(") + 1);
                     lval = line.Split(',');
                     if (lval.Length >= (meteovar + 3))
+                    {
                         lv = lval[meteovar + 3].Replace('.', ',').Replace('\'', ' ').Trim();
+                    }
                 }
                 if (lv != "null" && lv != "" && !line.StartsWith("--")) // ignore invalid points and comments
                 {
                     y = Convert.ToDouble(lv);
-                    long v = (long)Convert.ToInt64(lval[0]);
+                    long v = Convert.ToInt64(lval[0]);
                     xd = Convert.ToDateTime(new DateTime(v));
                     if (xd.Day == day && xd.Month == month && xd.Year == year)
                     {
@@ -620,7 +637,10 @@ namespace WS2300
                     else
                     {
                         if (year > 0)
+                        {
                             list.SetMean(day, month, year, ysum / cnt);
+                        }
+
                         day = xd.Day;
                         month = xd.Month;
                         year = xd.Year;
@@ -631,34 +651,38 @@ namespace WS2300
                 }
             }
             if (year > 0)
+            {
                 list.SetMean(day, month, year, ysum / cnt);
+            }
 
             sr.Close();
             month = 0;
             int monthnew, yearnew;
             this.textBoxReceive.Clear();
-            display("Temperatures: Max, Min, Mean");
-            display("ALL 2007 data Means: " + list.EvaluateMeanMax(0, 2007).ToString("F1") + " "
+            Display("Temperatures: Max, Min, Mean");
+            Display("ALL 2007 data Means: " + list.EvaluateMeanMax(0, 2007).ToString("F1") + " "
                 + list.EvaluateMeanMin(0, 2007).ToString("F1") + " " + list.EvaluateMeanMean(0, 2007).ToString("F1"));
-            display("ALL 2008 data Means: " + list.EvaluateMeanMax(0, 2008).ToString("F1") + " "
+            Display("ALL 2008 data Means: " + list.EvaluateMeanMax(0, 2008).ToString("F1") + " "
                 + list.EvaluateMeanMin(0, 2008).ToString("F1") + " " + list.EvaluateMeanMean(0, 2008).ToString("F1"));
             for (int i = 0; i < list.Count(); i++)
             {
-                monthnew = list.Maxmin(i).month;
-                yearnew = list.Maxmin(i).year;
+                monthnew = list.Maxmin(i).Month;
+                yearnew = list.Maxmin(i).Year;
                 if (month != monthnew)
                 {
-                    display("Month " + monthnew.ToString() + "/" + yearnew.ToString() + " Means: " + list.EvaluateMeanMax(monthnew, yearnew).ToString("F1") + " "
+                    Display("Month " + monthnew.ToString() + "/" + yearnew.ToString() + " Means: " + list.EvaluateMeanMax(monthnew, yearnew).ToString("F1") + " "
                         + list.EvaluateMeanMin(monthnew, yearnew).ToString("F1") + " " + list.EvaluateMeanMean(monthnew, yearnew).ToString("F1"));
                     month = monthnew;
                 }
                 if (checkBoxValues.Checked)
-                    display(list.Maxmin(i).date + ": " + list.Maxmin(i).max.ToString("F1") + " "
-                        + list.Maxmin(i).min.ToString("F1") + " " + list.Maxmin(i).mean.ToString("F1"));
+                {
+                    Display(list.Maxmin(i).Date + ": " + list.Maxmin(i).Max.ToString("F1") + " "
+                        + list.Maxmin(i).Min.ToString("F1") + " " + list.Maxmin(i).Mean.ToString("F1"));
+                }
             }
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void BtnOpen_Click(object sender, EventArgs e)
         {
             try
             {
@@ -673,7 +697,7 @@ namespace WS2300
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void BtnClose_Click(object sender, EventArgs e)
         {
             try
             {
@@ -689,7 +713,8 @@ namespace WS2300
 
     public class MaxMinList
     {
-        private List<MaxMin> maxmin = new List<MaxMin>();
+        private readonly List<MaxMin> maxmin = new List<MaxMin>();
+
         public MaxMinList()
         {
         }
@@ -702,31 +727,34 @@ namespace WS2300
         public void SetMax(int day, int month, int year, double y)
         {
             foreach (MaxMin p in maxmin)
-                if (p.isSameDate(day, month, year))
-                    p.max = y;
+                if (p.IsSameDate(day, month, year))
+                    p.Max = y;
         }
 
         public void SetMin(int day, int month, int year, double y)
         {
             foreach (MaxMin p in maxmin)
-                if (p.isSameDate(day, month, year))
-                    p.min = y;
+                if (p.IsSameDate(day, month, year))
+                    p.Min = y;
         }
 
         public void SetMean(int day, int month, int year, double y)
         {
             foreach (MaxMin p in maxmin)
-                if (p.isSameDate(day, month, year))
-                    p.mean = y;
+                if (p.IsSameDate(day, month, year))
+                    p.Mean = y;
         }
 
         public double Max(int day, int month, int year)
         {
             double ret = -1000;
             foreach (MaxMin p in maxmin)
-                if (p.isSameDate(day, month, year))
-                    if (ret < p.max)
-                        ret = p.max;
+            {
+                if (p.IsSameDate(day, month, year) && ret < p.Max)
+                {
+                    ret = p.Max;
+                }
+            }
             return ret;
         }
 
@@ -734,9 +762,12 @@ namespace WS2300
         {
             double ret = 1000;
             foreach (MaxMin p in maxmin)
-                if (p.isSameDate(day, month, year))
-                    if (ret > p.min)
-                        ret = p.min;
+            {
+                if (p.IsSameDate(day, month, year) && ret > p.Min)
+                {
+                    ret = p.Min;
+                }
+            }
             return ret;
         }
 
@@ -744,9 +775,12 @@ namespace WS2300
         {
             double ret = 1000;
             foreach (MaxMin p in maxmin)
-                if (p.isSameDate(day, month, year))
-                    if (ret > p.mean)
-                        ret = p.mean;
+            {
+                if (p.IsSameDate(day, month, year) && ret > p.Mean)
+                {
+                    ret = p.Mean;
+                }
+            }
             return ret;
         }
 
@@ -765,14 +799,13 @@ namespace WS2300
             double valSum = 0;
             int valCnt = 0;
             foreach (MaxMin p in maxmin)
-                if (p.year == year)
+            {
+                if (p.Year == year && (p.Month == month || month == 0))
                 {
-                    if (p.month == month || month == 0)
-                    {
-                        valSum += p.max;
-                        valCnt++;
-                    }
+                    valSum += p.Max;
+                    valCnt++;
                 }
+            }
             return valCnt > 0 ? valSum / valCnt : 1000;
         }
 
@@ -781,14 +814,13 @@ namespace WS2300
             double valSum = 0;
             int valCnt = 0;
             foreach (MaxMin p in maxmin)
-                if (p.year == year)
+            {
+                if (p.Year == year && (p.Month == month || month == 0))
                 {
-                    if (p.month == month || month == 0)
-                    {
-                        valSum += p.min;
-                        valCnt++;
-                    }
+                    valSum += p.Min;
+                    valCnt++;
                 }
+            }
             return valCnt > 0 ? valSum / valCnt : 1000;
         }
 
@@ -797,26 +829,20 @@ namespace WS2300
             double valSum = 0;
             int valCnt = 0;
             foreach (MaxMin p in maxmin)
-                if (p.year == year)
+            {
+                if (p.Year == year && (p.Month == month || month == 0))
                 {
-                    if (p.month == month || month == 0)
-                    {
-                        valSum += p.mean;
-                        valCnt++;
-                    }
+                    valSum += p.Mean;
+                    valCnt++;
                 }
+            }
             return valCnt > 0 ? valSum / valCnt : 1000;
         }
     }
 
     public class MaxMin
     {
-        private double Max;
-        private double Min;
-        private double Mean;
-        private int Day;
-        private int Month;
-        private int Year;
+        private readonly int Day;
 
         public MaxMin(int _day, int _month, int _year, double _Max, double _Min)
         {
@@ -827,59 +853,17 @@ namespace WS2300
             Min = _Min;
         }
 
-        public double max
-        {
-            get
-            {
-                return Max;
-            }
-            set
-            {
-                Max = value;
-            }
-        }
+        public double Max { get; set; }
 
-        public double min
-        {
-            get
-            {
-                return Min;
-            }
-            set
-            {
-                Min = value;
-            }
-        }
+        public double Min { get; set; }
 
-        public double mean
-        {
-            get
-            {
-                return Mean;
-            }
-            set
-            {
-                Mean = value;
-            }
-        }
+        public double Mean { get; set; }
 
-        public int month
-        {
-            get
-            {
-                return Month;
-            }
-        }
+        public int Month { get; }
 
-        public int year
-        {
-            get
-            {
-                return Year;
-            }
-        }
+        public int Year { get; }
 
-        public string date
+        public string Date
         {
             get
             {
@@ -887,13 +871,9 @@ namespace WS2300
             }
         }
 
-        internal bool isSameDate(int day, int month, int year)
+        internal bool IsSameDate(int day, int month, int year)
         {
-            if (Day == day && Month == month && Year == year)
-                return true;
-            else
-                return false;
+            return Day == day && this.Month == month && this.Year == year;
         }
     }
-
 }

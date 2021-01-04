@@ -42,7 +42,7 @@ namespace WS2300
             // DateTime (long ticks) A date and time expressed in 100-nanosecond units.
             //myPane.XAxis.Scale.Max = 39814; // 1-1-2009
             //633663648000000000 = 01gen2009 ore 0:00
-            double di = 633663648000000000.0 / 39814.0; //15915598734113.628371929472045009;
+            double di = 633663648000000000.0 / 39814.0; //thatis 15915598734113.628371929472045009
             myPane.XAxis.Scale.Max = DateTime.Now.Ticks/di + 1;
             myPane.XAxis.Scale.Min = myPane.XAxis.Scale.Max - 60;
             zedGraph.AxisChange();
@@ -94,7 +94,7 @@ namespace WS2300
             string[] name = new string[] { "Temp in", "Temp out", "dewpoint", "Rel humidity in", "Rel humidity out", "Wind speed", "Wind angle", "Wind Direction", "Wind chill", "rain_1h", "rain_24h", "Rain total", "Air pressure" };
             string[] vname = new string[] { "°C", "°C", "°C", "%", "%", "m/s", "deg", "", "°C", "", "", "mm", "hPa" };
             SymbolType[] sym = new SymbolType[] { SymbolType.None };
-            //SymbolType[] sym = new SymbolType[] { SymbolType.Plus, SymbolType.None, SymbolType.Star, SymbolType.Square, SymbolType.Triangle, SymbolType.Diamond };
+            //to use symbols: SymbolType.Plus, SymbolType.None, SymbolType.Star, SymbolType.Square, SymbolType.Triangle, SymbolType.Diamond
 
             GraphPane myPane = zgc.GraphPane;
             if (clear)
@@ -104,7 +104,9 @@ namespace WS2300
                     {
                         //myPane.CurveList[name[meteovar]].Clear();
                         if (myPane.CurveList[i].Label.Text == name[meteovar])
+                        {
                             myPane.CurveList[i].Clear();
+                        }
                     }
             }
             else
@@ -144,7 +146,7 @@ namespace WS2300
                     if (lv != "null" && lv != "" && !line.StartsWith("--")) // ignore invalid points and comments
                     {
                         y = Convert.ToDouble(lv);
-                        long v = (long)Convert.ToInt64(lval[0]);
+                        long v = Convert.ToInt64(lval[0]);
                         xd = Convert.ToDateTime(new DateTime(v));
                         list.Add(xd, y);
                     }

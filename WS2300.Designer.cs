@@ -75,7 +75,7 @@ namespace WS2300
             this.btnInTmp.TabIndex = 1;
             this.btnInTmp.Text = "Internal Temp";
             this.btnInTmp.UseVisualStyleBackColor = true;
-            this.btnInTmp.Click += new System.EventHandler(this.btnInTmp_Click);
+            this.btnInTmp.Click += new System.EventHandler(this.BtnInTmp_Click);
             // 
             // lblIntTemp
             // 
@@ -94,7 +94,7 @@ namespace WS2300
             this.btnRead.TabIndex = 5;
             this.btnRead.Text = "Read";
             this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
+            this.btnRead.Click += new System.EventHandler(this.BtnRead_Click);
             // 
             // textBoxReceive
             // 
@@ -113,7 +113,7 @@ namespace WS2300
             this.btnMinMax.TabIndex = 6;
             this.btnMinMax.Text = "Read min/Max";
             this.btnMinMax.UseVisualStyleBackColor = true;
-            this.btnMinMax.Click += new System.EventHandler(this.btnMinMax_Click);
+            this.btnMinMax.Click += new System.EventHandler(this.BtnMinMax_Click);
             // 
             // btnReset
             // 
@@ -123,7 +123,7 @@ namespace WS2300
             this.btnReset.TabIndex = 7;
             this.btnReset.Text = "Reset mi/Mx";
             this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
             // 
             // btnHistorySave
             // 
@@ -133,7 +133,7 @@ namespace WS2300
             this.btnHistorySave.TabIndex = 9;
             this.btnHistorySave.Text = "Save History from";
             this.btnHistorySave.UseVisualStyleBackColor = true;
-            this.btnHistorySave.Click += new System.EventHandler(this.btnHistorySave_Click);
+            this.btnHistorySave.Click += new System.EventHandler(this.BtnHistorySave_Click);
             // 
             // dateTimePicker1
             // 
@@ -153,7 +153,7 @@ namespace WS2300
             this.btnReadTh.TabIndex = 8;
             this.btnReadTh.Text = "READ All";
             this.btnReadTh.UseVisualStyleBackColor = true;
-            this.btnReadTh.Click += new System.EventHandler(this.btnReadTh_Click);
+            this.btnReadTh.Click += new System.EventHandler(this.BtnReadTh_Click);
             // 
             // lblHistory
             // 
@@ -172,7 +172,7 @@ namespace WS2300
             this.btnHistoryRead.TabIndex = 13;
             this.btnHistoryRead.Text = "Open History";
             this.btnHistoryRead.UseVisualStyleBackColor = true;
-            this.btnHistoryRead.Click += new System.EventHandler(this.btnViewLog_Click);
+            this.btnHistoryRead.Click += new System.EventHandler(this.BtnViewLog_Click);
             // 
             // btnGRAPH
             // 
@@ -194,7 +194,7 @@ namespace WS2300
             this.btnMeans.TabIndex = 12;
             this.btnMeans.Text = "MEANS";
             this.btnMeans.UseVisualStyleBackColor = true;
-            this.btnMeans.Click += new System.EventHandler(this.btnMean_Click);
+            this.btnMeans.Click += new System.EventHandler(this.BtnMean_Click);
             // 
             // btnOpen
             // 
@@ -205,7 +205,7 @@ namespace WS2300
             this.btnOpen.TabIndex = 3;
             this.btnOpen.Text = "OPEN COM";
             this.btnOpen.UseVisualStyleBackColor = false;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.btnOpen.Click += new System.EventHandler(this.BtnOpen_Click);
             // 
             // btnClose
             // 
@@ -216,7 +216,7 @@ namespace WS2300
             this.btnClose.TabIndex = 4;
             this.btnClose.Text = "CLOSE COM";
             this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
             // checkBoxValues
             // 
