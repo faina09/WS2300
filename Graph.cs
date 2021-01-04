@@ -9,9 +9,9 @@ namespace WS2300
     public partial class Graph : Form
     {
         private int a;
-        private string LogFile;
-        private string history_log_type;
-        Color[] col = new Color[13] { Color.Red, Color.DarkViolet, Color.Green, Color.Blue,      
+        private readonly string LogFile;
+        private readonly string history_log_type;
+        private readonly Color[] col = new Color[13] { Color.Red, Color.DarkViolet, Color.Green, Color.Blue,
             Color.DarkOrange, Color.Gold,  Color.LawnGreen,  Color.White, Color.DeepSkyBlue,
             Color.White, Color.White, Color.Red, Color.DarkViolet};
 
@@ -43,7 +43,7 @@ namespace WS2300
             //myPane.XAxis.Scale.Max = 39814; // 1-1-2009
             //633663648000000000 = 01gen2009 ore 0:00
             double di = 633663648000000000.0 / 39814.0; //thatis 15915598734113.628371929472045009
-            myPane.XAxis.Scale.Max = DateTime.Now.Ticks/di + 1;
+            myPane.XAxis.Scale.Max = DateTime.Now.Ticks / di + 1;
             myPane.XAxis.Scale.Min = myPane.XAxis.Scale.Max - 60;
             zedGraph.AxisChange();
             zedGraph.Refresh();
@@ -90,7 +90,7 @@ namespace WS2300
 
         private void CreateGraph(ZedGraphControl zgc, int meteovar, bool clear, bool clearall)
         {
-            meteovar = meteovar - 3;
+            meteovar -= 3;
             string[] name = new string[] { "Temp in", "Temp out", "dewpoint", "Rel humidity in", "Rel humidity out", "Wind speed", "Wind angle", "Wind Direction", "Wind chill", "rain_1h", "rain_24h", "Rain total", "Air pressure" };
             string[] vname = new string[] { "°C", "°C", "°C", "%", "%", "m/s", "deg", "", "°C", "", "", "mm", "hPa" };
             SymbolType[] sym = new SymbolType[] { SymbolType.None };
@@ -119,7 +119,7 @@ namespace WS2300
                 myPane.YAxis.Title.Text = name[meteovar] + " (" + vname[meteovar] + ")";
                 myPane.YAxis.MajorGrid.IsVisible = true;
 
-                // Make up data points 
+                // Make up data points
                 PointPairList list = new PointPairList();
                 StreamReader sr = new StreamReader(LogFile);
                 string line;
@@ -134,14 +134,18 @@ namespace WS2300
                     {
                         lval = line.Split(',');
                         if (lval.Length >= (meteovar + 3))
+                        {
                             lv = lval[meteovar + 3].Replace('.', ',').Trim();
+                        }
                     }
                     else
                     {
                         line = line.Substring(line.LastIndexOf("(") + 1);
                         lval = line.Split(',');
                         if (lval.Length >= (meteovar + 3))
+                        {
                             lv = lval[meteovar + 3].Replace('.', ',').Replace('\'', ' ').Trim();
+                        }
                     }
                     if (lv != "null" && lv != "" && !line.StartsWith("--")) // ignore invalid points and comments
                     {
@@ -153,7 +157,10 @@ namespace WS2300
                 }
                 sr.Close();
                 if (clearall)
+                {
                     myPane.CurveList.Clear();
+                }
+
                 LineItem myCurve = myPane.AddCurve(name[meteovar], list, col[meteovar % col.Length], sym[meteovar % sym.Length]);
                 // Make the symbols opaque by filling them with white
                 myCurve.Symbol.Fill = new Fill(Color.White);
@@ -164,7 +171,7 @@ namespace WS2300
             zgc.Refresh();
         }
 
-        private void btn1_Click(object sender, EventArgs e)
+        private void Btn1_Click(object sender, EventArgs e)
         {
             //DATA:   0,    1,    2,       3,        4,        5,          6,           7,         8,          9,          -- 10,         11,   -- 12,    -- 13,         14,           15,       --,       --
             //timestamp, date, time, temp_in, temp_out, dewpoint, rel_hum_in, rel_hum_out, windspeed, wind_angle, wind_direction, wind_chill, rain_1h, rain_24h, rain_total, rel_pressure, tendency, forecast
@@ -175,57 +182,57 @@ namespace WS2300
             CreateGraph(zedGraph, a++, false, true);
         }
 
-        private void chkT_in_CheckedChanged(object sender, EventArgs e)
+        private void ChkT_in_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 3, !chkT_in.Checked, false);
         }
 
-        private void chkT_out_CheckedChanged(object sender, EventArgs e)
+        private void ChkT_out_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 4, !chkT_out.Checked, false);
         }
 
-        private void chkH_in_CheckedChanged(object sender, EventArgs e)
+        private void ChkH_in_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 6, !chkH_in.Checked, false);
         }
 
-        private void chkH_out_CheckedChanged(object sender, EventArgs e)
+        private void ChkH_out_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 7, !chkH_out.Checked, false);
         }
 
-        private void chkDew_CheckedChanged(object sender, EventArgs e)
+        private void ChkDew_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 5, !chkDew.Checked, false);
         }
 
-        private void chkW_speed_CheckedChanged(object sender, EventArgs e)
+        private void ChkW_speed_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 8, !chkW_speed.Checked, false);
         }
 
-        private void chkW_angle_CheckedChanged(object sender, EventArgs e)
+        private void ChkW_angle_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 9, !chkW_angle.Checked, false);
         }
 
-        private void chkW_chill_CheckedChanged(object sender, EventArgs e)
+        private void ChkW_chill_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 11, !chkW_chill.Checked, false);
         }
 
-        private void chkRain_CheckedChanged(object sender, EventArgs e)
+        private void ChkRain_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 14, !chkRain.Checked, false);
         }
 
-        private void chkPress_CheckedChanged(object sender, EventArgs e)
+        private void ChkPress_CheckedChanged(object sender, EventArgs e)
         {
             CreateGraph(zedGraph, 15, !chkPress.Checked, false);
         }
 
-        private void btnRedraw_Click(object sender, EventArgs e)
+        private void BtnRedraw_Click(object sender, EventArgs e)
         {
             GraphPane myPane = zedGraph.GraphPane;
             myPane.CurveList.Clear();
@@ -253,57 +260,57 @@ namespace WS2300
             zedGraph.Refresh();
         }
 
-        private void colorPickerTin_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPickerTin_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[0] = colorPickerTin.Color;
         }
 
-        private void colorPicker1_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker1_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[1] = colorPicker1.Color;
         }
 
-        private void colorPicker2_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker2_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[2] = colorPicker2.Color;
         }
 
-        private void colorPicker3_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker3_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[3] = colorPicker3.Color;
         }
 
-        private void colorPicker4_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker4_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[4] = colorPicker4.Color;
         }
 
-        private void colorPicker5_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker5_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[5] = colorPicker5.Color;
         }
 
-        private void colorPicker6_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker6_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[6] = colorPicker6.Color;
         }
 
-        private void colorPicker7_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker7_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[8] = colorPicker7.Color;
         }
 
-        private void colorPicker8_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker8_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[11] = colorPicker8.Color;
         }
 
-        private void colorPicker9_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
+        private void ColorPicker9_ColorChanged(object sender, PJLControls.ColorChangedEventArgs e)
         {
             col[12] = colorPicker9.Color;
         }
 
-        private bool zedGraph_MouseMoveEvent(ZedGraphControl sender, MouseEventArgs e)
+        private bool ZedGraph_MouseMoveEvent(ZedGraphControl sender, MouseEventArgs e)
         {
             // Save the mouse location
             PointF mousePt = new PointF(e.X, e.Y);
@@ -315,15 +322,16 @@ namespace WS2300
             // within any chart rect.
             if (pane != null)
             {
-                double x, y;
                 // Convert the mouse location to X, and Y scale values
-                pane.ReverseTransform(mousePt, out x, out y);
+                pane.ReverseTransform(mousePt, out double x, out double y);
                 // Format the status label text
                 toolStripStatusXY.Text = "(" + x.ToString("f2") + ", " + y.ToString("f2") + ")";
             }
             else
+            {
                 // If there is no valid data, then clear the status label text
                 toolStripStatusXY.Text = string.Empty;
+            }
 
             // Return false to indicate we have not processed the MouseMoveEvent
             // ZedGraphControl should still go ahead and handle it

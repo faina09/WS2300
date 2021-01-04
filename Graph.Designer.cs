@@ -73,7 +73,7 @@ namespace WS2300
             this.zedGraph.ScrollMinY2 = 0;
             this.zedGraph.Size = new System.Drawing.Size(439, 297);
             this.zedGraph.TabIndex = 0;
-            this.zedGraph.MouseMoveEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(this.zedGraph_MouseMoveEvent);
+            this.zedGraph.MouseMoveEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(this.ZedGraph_MouseMoveEvent);
             // 
             // btn1
             // 
@@ -83,7 +83,7 @@ namespace WS2300
             this.btn1.TabIndex = 1;
             this.btn1.Text = "-> > >";
             this.btn1.UseVisualStyleBackColor = true;
-            this.btn1.Click += new System.EventHandler(this.btn1_Click);
+            this.btn1.Click += new System.EventHandler(this.Btn1_Click);
             // 
             // chkT_in
             // 
@@ -94,7 +94,7 @@ namespace WS2300
             this.chkT_in.TabIndex = 2;
             this.chkT_in.Text = "T in";
             this.chkT_in.UseVisualStyleBackColor = true;
-            this.chkT_in.CheckedChanged += new System.EventHandler(this.chkT_in_CheckedChanged);
+            this.chkT_in.CheckedChanged += new System.EventHandler(this.ChkT_in_CheckedChanged);
             // 
             // chkT_out
             // 
@@ -105,7 +105,7 @@ namespace WS2300
             this.chkT_out.TabIndex = 3;
             this.chkT_out.Text = "T out";
             this.chkT_out.UseVisualStyleBackColor = true;
-            this.chkT_out.CheckedChanged += new System.EventHandler(this.chkT_out_CheckedChanged);
+            this.chkT_out.CheckedChanged += new System.EventHandler(this.ChkT_out_CheckedChanged);
             // 
             // chkH_in
             // 
@@ -116,7 +116,7 @@ namespace WS2300
             this.chkH_in.TabIndex = 4;
             this.chkH_in.Text = "Hum in";
             this.chkH_in.UseVisualStyleBackColor = true;
-            this.chkH_in.CheckedChanged += new System.EventHandler(this.chkH_in_CheckedChanged);
+            this.chkH_in.CheckedChanged += new System.EventHandler(this.ChkH_in_CheckedChanged);
             // 
             // chkH_out
             // 
@@ -127,7 +127,7 @@ namespace WS2300
             this.chkH_out.TabIndex = 5;
             this.chkH_out.Text = "Hum out";
             this.chkH_out.UseVisualStyleBackColor = true;
-            this.chkH_out.CheckedChanged += new System.EventHandler(this.chkH_out_CheckedChanged);
+            this.chkH_out.CheckedChanged += new System.EventHandler(this.ChkH_out_CheckedChanged);
             // 
             // chkDew
             // 
@@ -138,7 +138,7 @@ namespace WS2300
             this.chkDew.TabIndex = 6;
             this.chkDew.Text = "Dew point";
             this.chkDew.UseVisualStyleBackColor = true;
-            this.chkDew.CheckedChanged += new System.EventHandler(this.chkDew_CheckedChanged);
+            this.chkDew.CheckedChanged += new System.EventHandler(this.ChkDew_CheckedChanged);
             // 
             // chkW_speed
             // 
@@ -149,7 +149,7 @@ namespace WS2300
             this.chkW_speed.TabIndex = 7;
             this.chkW_speed.Text = "Wind speed";
             this.chkW_speed.UseVisualStyleBackColor = true;
-            this.chkW_speed.CheckedChanged += new System.EventHandler(this.chkW_speed_CheckedChanged);
+            this.chkW_speed.CheckedChanged += new System.EventHandler(this.ChkW_speed_CheckedChanged);
             // 
             // chkW_angle
             // 
@@ -160,7 +160,7 @@ namespace WS2300
             this.chkW_angle.TabIndex = 8;
             this.chkW_angle.Text = "Wind angle";
             this.chkW_angle.UseVisualStyleBackColor = true;
-            this.chkW_angle.CheckedChanged += new System.EventHandler(this.chkW_angle_CheckedChanged);
+            this.chkW_angle.CheckedChanged += new System.EventHandler(this.ChkW_angle_CheckedChanged);
             // 
             // chkPress
             // 
@@ -171,7 +171,7 @@ namespace WS2300
             this.chkPress.TabIndex = 9;
             this.chkPress.Text = "Pressure";
             this.chkPress.UseVisualStyleBackColor = true;
-            this.chkPress.CheckedChanged += new System.EventHandler(this.chkPress_CheckedChanged);
+            this.chkPress.CheckedChanged += new System.EventHandler(this.ChkPress_CheckedChanged);
             // 
             // btnRedraw
             // 
@@ -181,7 +181,7 @@ namespace WS2300
             this.btnRedraw.TabIndex = 10;
             this.btnRedraw.Text = "Redraw";
             this.btnRedraw.UseVisualStyleBackColor = true;
-            this.btnRedraw.Click += new System.EventHandler(this.btnRedraw_Click);
+            this.btnRedraw.Click += new System.EventHandler(this.BtnRedraw_Click);
             // 
             // chkRain
             // 
@@ -192,7 +192,7 @@ namespace WS2300
             this.chkRain.TabIndex = 11;
             this.chkRain.Text = "Rain";
             this.chkRain.UseVisualStyleBackColor = true;
-            this.chkRain.CheckedChanged += new System.EventHandler(this.chkRain_CheckedChanged);
+            this.chkRain.CheckedChanged += new System.EventHandler(this.ChkRain_CheckedChanged);
             // 
             // chkW_chill
             // 
@@ -203,7 +203,7 @@ namespace WS2300
             this.chkW_chill.TabIndex = 12;
             this.chkW_chill.Text = "Wind chill";
             this.chkW_chill.UseVisualStyleBackColor = true;
-            this.chkW_chill.CheckedChanged += new System.EventHandler(this.chkW_chill_CheckedChanged);
+            this.chkW_chill.CheckedChanged += new System.EventHandler(this.ChkW_chill_CheckedChanged);
             // 
             // colorPickerTin
             // 
@@ -223,7 +223,7 @@ namespace WS2300
             this.colorPickerTin.Name = "colorPickerTin";
             this.colorPickerTin.Size = new System.Drawing.Size(77, 19);
             this.colorPickerTin.TabIndex = 13;
-            this.colorPickerTin.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPickerTin_ColorChanged);
+            this.colorPickerTin.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPickerTin_ColorChanged);
             // 
             // colorPicker1
             // 
@@ -243,7 +243,7 @@ namespace WS2300
             this.colorPicker1.Name = "colorPicker1";
             this.colorPicker1.Size = new System.Drawing.Size(77, 19);
             this.colorPicker1.TabIndex = 14;
-            this.colorPicker1.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker1_ColorChanged);
+            this.colorPicker1.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker1_ColorChanged);
             // 
             // colorPicker2
             // 
@@ -263,7 +263,7 @@ namespace WS2300
             this.colorPicker2.Name = "colorPicker2";
             this.colorPicker2.Size = new System.Drawing.Size(77, 19);
             this.colorPicker2.TabIndex = 15;
-            this.colorPicker2.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker2_ColorChanged);
+            this.colorPicker2.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker2_ColorChanged);
             // 
             // colorPicker3
             // 
@@ -283,7 +283,7 @@ namespace WS2300
             this.colorPicker3.Name = "colorPicker3";
             this.colorPicker3.Size = new System.Drawing.Size(77, 19);
             this.colorPicker3.TabIndex = 16;
-            this.colorPicker3.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker3_ColorChanged);
+            this.colorPicker3.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker3_ColorChanged);
             // 
             // colorPicker4
             // 
@@ -303,7 +303,7 @@ namespace WS2300
             this.colorPicker4.Name = "colorPicker4";
             this.colorPicker4.Size = new System.Drawing.Size(77, 19);
             this.colorPicker4.TabIndex = 17;
-            this.colorPicker4.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker4_ColorChanged);
+            this.colorPicker4.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker4_ColorChanged);
             // 
             // colorPicker5
             // 
@@ -323,7 +323,7 @@ namespace WS2300
             this.colorPicker5.Name = "colorPicker5";
             this.colorPicker5.Size = new System.Drawing.Size(77, 19);
             this.colorPicker5.TabIndex = 18;
-            this.colorPicker5.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker5_ColorChanged);
+            this.colorPicker5.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker5_ColorChanged);
             // 
             // colorPicker6
             // 
@@ -343,7 +343,7 @@ namespace WS2300
             this.colorPicker6.Name = "colorPicker6";
             this.colorPicker6.Size = new System.Drawing.Size(77, 19);
             this.colorPicker6.TabIndex = 19;
-            this.colorPicker6.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker6_ColorChanged);
+            this.colorPicker6.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker6_ColorChanged);
             // 
             // colorPicker7
             // 
@@ -363,7 +363,7 @@ namespace WS2300
             this.colorPicker7.Name = "colorPicker7";
             this.colorPicker7.Size = new System.Drawing.Size(77, 19);
             this.colorPicker7.TabIndex = 20;
-            this.colorPicker7.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker7_ColorChanged);
+            this.colorPicker7.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker7_ColorChanged);
             // 
             // colorPicker8
             // 
@@ -383,7 +383,7 @@ namespace WS2300
             this.colorPicker8.Name = "colorPicker8";
             this.colorPicker8.Size = new System.Drawing.Size(77, 19);
             this.colorPicker8.TabIndex = 21;
-            this.colorPicker8.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker8_ColorChanged);
+            this.colorPicker8.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker8_ColorChanged);
             // 
             // colorPicker9
             // 
@@ -403,7 +403,7 @@ namespace WS2300
             this.colorPicker9.Name = "colorPicker9";
             this.colorPicker9.Size = new System.Drawing.Size(77, 19);
             this.colorPicker9.TabIndex = 22;
-            this.colorPicker9.ColorChanged += new PJLControls.ColorChangedEventHandler(this.colorPicker9_ColorChanged);
+            this.colorPicker9.ColorChanged += new PJLControls.ColorChangedEventHandler(this.ColorPicker9_ColorChanged);
             // 
             // statusStrip1
             // 

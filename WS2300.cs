@@ -276,7 +276,7 @@ namespace WS2300
             press = -1;
             strO = "";
             string[] directions = new string[]{"N","NNE","NE","ENE","E","ESE","SE","SSE",
-	                           "S","SSW","SW","WSW","W","WNW","NW","NNW"};
+                               "S","SSW","SW","WSW","W","WNW","NW","NNW"};
 #endif
             time_last = new WS2300base.timestamp();
             int current_record, lastlog_record, new_records;
